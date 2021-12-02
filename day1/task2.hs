@@ -3,6 +3,13 @@ module Main where
 import System.IO
 import Data.List.Split
 --------------------------------------------------------------------------------
+createSlabs :: [Int] -> [Int] -> [Int]
+createSlabs (x0:x1:x2:xs) slabs = do
+  createSlabs (x1:x2:xs) (slabs ++ [x0+x1+x2])
+createSlabs [x0,x1] slabs = slabs
+createSlabs [x0] slabs = slabs
+createSlabs [] slabs = slabs
+--------------------------------------------------------------------------------
 toInts :: [String] -> [Int]
 toInts = map read
 --------------------------------------------------------------------------------
@@ -20,6 +27,7 @@ main = do
   let
     ws = endBy "\n" content
     is = toInts ws
-    numIncreases = countIncreases is 0
+    slabs = createSlabs is []
+    numIncreases = countIncreases slabs 0
   print numIncreases
   hClose handle
