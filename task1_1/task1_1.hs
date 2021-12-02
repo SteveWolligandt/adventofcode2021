@@ -1,14 +1,26 @@
+module Main where
+--------------------------------------------------------------------------------
 import System.IO
-
-wordsWhen     :: (Char -> Bool) -> String -> [String]
-wordsWhen p s =  case dropWhile p s of
-                      "" -> []
-                      s' -> w : wordsWhen p s''
-                            where (w, s'') = break p s'
-
+import Data.List.Split
+--------------------------------------------------------------------------------
+toInts :: [String] -> [Int]
+toInts = map read
+--------------------------------------------------------------------------------
+countIncreases :: [Int] -> Int -> Int
+countIncreases (i0:i1:is) cnt = do
+  if i0 < i1
+    then countIncreases (i1:is) (cnt + 1)
+    else countIncreases (i1:is) cnt
+countIncreases [_] cnt = cnt
+countIncreases [] cnt = cnt
+--------------------------------------------------------------------------------
 main = do
-  handle <- openFile "input.txt" ReadMode  
+  handle  <- openFile "input.txt" ReadMode
   content <- hGetContents handle
-  w <- wordsWhen (=='\n') content
-  putStr w[1]
-  hClose handle  
+  let
+    ws = endBy "\n" content
+    is = toInts ws
+    numIncreases = countIncreases is 0
+  print (length is)
+  print numIncreases
+  hClose handle
