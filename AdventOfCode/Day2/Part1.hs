@@ -9,7 +9,7 @@ dive [horizontal,depth] ((Down   , i):rest) = dive [horizontal,depth + i] rest
 dive [horizontal,depth] ((Unknown, i):rest) = dive [horizontal,depth] rest 
 dive pos [] = pos
 --------------------------------------------------------------------------------
-part1 :: String -> IO ()
+part1 :: [String] -> IO ()
 part1 input = do
   diveCmds <- parseDiveMoves input
   let [horizontal, depth] = dive startPos diveCmds
