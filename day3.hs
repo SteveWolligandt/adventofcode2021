@@ -6,7 +6,7 @@ import AdventOfCode.Day3
 
 main = do
   operateOnInput "test.day3.txt" test1
-  print ""
+  putStrLn ""
   operateOnInput "input.day3.txt" part1
-  print ""
+  putStrLn ""
   operateOnInput "input.day3.txt" part2
