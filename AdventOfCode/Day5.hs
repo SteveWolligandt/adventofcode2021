@@ -27,15 +27,18 @@ parse (line:lines) =
 constructField :: IntPair -> [[Int]]
 constructField (x,y) =  take y (repeat (take x (repeat 0)))
 
-fillField :: [[Int]] -> [PosPair] -> [[Int]]
-fillField field [] = field
-fillField field (line:lines) = fillField (fieldField_ field line) lines
+--fillField :: [[Int]] -> [PosPair] -> [[Int]]
+--fillField field [] = field
+--fillField field (line:lines) = fillField (fieldField_ field line) lines
+--
+--fillField_ :: [[Int]] -> PosPair -> [[Int]]
+--fillField_ field ((x0,y0),(x1,y1))
+--  | x0 == x1 =
+--  | y0 == y1 =
+--  | otherwise = field
 
-fillField_ :: [[Int]] -> PosPair -> [[Int]]
-fillField_ field ((x0,y0),(x1,y1))
-  | x0 == x1 = 
-  | y0 == y1 = 
-  | otherwise = field
+filterNonDiagnoal :: [[Int]]  -> [[Int]]
+filterNonDiagnoal pairs = filter (/((x0,y0),(x1,y1)) -> x0 == x1 || y0 == y1) pairs
 
 test1 :: [String] -> IO ()
 test1 input = do
