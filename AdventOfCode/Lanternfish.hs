@@ -14,13 +14,16 @@ simulateLanternfishes (str:_) = do
         state256 = simulate state0 256
         countPopulation = foldl (+) 0
 --------------------------------------------------------------------------------
+-- Splits comma separated list of numbers
 parse :: String -> [Word64]
 parse numsString = map read(splitOn "," numsString)
 --------------------------------------------------------------------------------
+-- Simulates lantern fish population
 simulate :: [Word64] -> Word64 -> [Word64]
 simulate sim 0 = sim
-simulate [a,b,c,d,e,f,g,h,i] n = simulate [b,c,d,e,f,g,h+a,i,a] (n-1)
+simulate [a,b,c,d,e,f,g,h,i] numDays = simulate [b,c,d,e,f,g,h+a,i,a] (numDays-1)
 --------------------------------------------------------------------------------
+-- transforms list of fish counters to counts of counters
 count :: [Word64] -> [Word64] -> [Word64]
 count [] cnts = cnts
 count (x:xs) [a,b,c,d,e,f,g,h,i] 
@@ -33,3 +36,4 @@ count (x:xs) [a,b,c,d,e,f,g,h,i]
   | x == 6    = count xs [a,b,c,d,e,f,g+1,h,i]
   | x == 7    = count xs [a,b,c,d,e,f,g,h+1,i]
   | x == 8    = count xs [a,b,c,d,e,f,g,h,i+1]
+  | otherwise = count xs [a,b,c,d,e,f,g,h,i]
