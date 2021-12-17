@@ -4,12 +4,15 @@ import Data.Word
 --------------------------------------------------------------------------------
 simulateLanternfishes :: [String] -> IO ()
 simulateLanternfishes (str:_) = do
-  print (foldl (+) 0 state80)
-  print (foldl (+) 0 state256)
+  putStrLn "Population after 80 days"
+  print (countPopulation state80)
+  putStrLn "Population after 256 days"
+  print (countPopulation state256)
   where nums = parse str
         state0 = count nums (take 9 (repeat 0))
         state80 = simulate state0 80
         state256 = simulate state0 256
+        countPopulation = foldl (+) 0
 --------------------------------------------------------------------------------
 parse :: String -> [Word64]
 parse numsString = map read(splitOn "," numsString)
